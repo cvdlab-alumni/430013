@@ -132,7 +132,7 @@ var pillars3_2_small_trasl = T([2,3])([5.3825,(2.5+h_piano)*3])(pillars3_2_small
 var pillars3_1 = T([1,2,3])([11,5.32+1.18575,(2.5+h_piano)*3])(pillar_rett);
 //allineamento del pilastro dove non e' presente il pavimento
 var pillar2_rett = CUBOID([l,l,h_piano]);
-var pillars2_2_all = STRUCT(NN(2)([pillar2_rett, T([1])([2.75])]));
+var pillars2_2_all = STRUCT(REPLICA(2)([pillar2_rett, T([1])([2.75])]));
 var pillars_no_pavimento = T([1,2,3])([2.75,5.32,(2.5+h_piano)*2+2.5])(pillar2_rett);
 //pilastro fuori angolo
 var pillar3_ang = T([3])([(2.5+h_piano)*3])(pillar0);

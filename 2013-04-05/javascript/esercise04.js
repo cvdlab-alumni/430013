@@ -368,6 +368,17 @@ var msfs3_traslB = T([1,3])([5.79,(2.5+0.39)*3])(muro_sotto_fin1);
 
 var east = STRUCT([muro_prin1_trasl,msfs_trasl,msfs2_trasl,muro_prin2_trasl,msfs3_traslB,msfs3_traslA]);
 
-var buildings = STRUCT([pillars0,pillars1,pillars2, pillars3, floors, west, east, south, north]);
+//// esercise04 //////
+
+var finestra1 = CUBOID([0.84,0.25,0.84]);
+var fin_trasl = T([1,2,3])([7.16,6.5,1.66])(finestra1);
+var finestra_nera = COLOR([0,0,0])(fin_trasl);
+
+var finestra2 = CUBOID([1.23*2,0.25,1.23]);
+var fin2_trasl = T([1,2,3])([5.12,6.5,2.5+0.39+1.27])(finestra2);
+var finestra2_nera = COLOR([0,0,0])(fin2_trasl);
+
+
+var buildings = STRUCT([pillars0,pillars1,pillars2, pillars3, floors, west, east, south, north,finestra2_nera,finestra_nera]);
 
 DRAW(buildings)
