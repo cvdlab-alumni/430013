@@ -1,7 +1,6 @@
-#Esercise.py
-#circle pillarpoints
+#appoggio piano terra
 from pyplasm import *
-
+#############################################################
 def extrude(obj, h):
 	return PROD([obj, Q(h)])
 
@@ -27,8 +26,9 @@ pillar0 = extrude(base_pillar, z_pillar0)
 pillars01x = STRUCT(NN(5)([pillar0, T([1])([2.75])]))
 #pilastro laterale asse y
 pillar01y = T([2])([5.32])(pillar0)
+pillar01y_trasl = STRUCT(NN(2)([pillar01y, T([1])([11])]))
 #unione pilastri piano terra esterni
-pillars_es = STRUCT([pillars01x,pillar01y])
+pillars_es = STRUCT([pillars01x,pillar01y_trasl])
 
 # 4 pilastri interni piano terra
 l = 0.25 
@@ -58,7 +58,7 @@ pillars1_3_y = STRUCT(NN(3)([pillar1_y, T([1])(2.75)]))
 #pilastro cilindrico primo piano
 pillars1_cil = T([1,2,3])([8.25,5.32,2.5+h_piano])(pillar0)
 #pilastro piu piccolo primo piano
-pillar1_small = T([1,2,3])([1.46,5.32,2.5+h_piano])(pillar_rett_small)
+pillar1_small = T([1,2,3])([0.73,5.32,2.5+h_piano])(pillar_rett_small)
 #quarto pilastro traslato 
 pillar1_4_y = T([1,2,3])([11,5.32,2.5+h_piano])(pillar_rett)
 
@@ -74,13 +74,8 @@ pillar2_1 = T([1,3])([11,(2.5+h_piano)*2])(pillar_rett)
 pillars2_3_y = STRUCT(NN(5)([pillar_rett, T([1])([2.75])]))
 pillars2_3_y_trasl = T([2,3])([5.32,(2.5+h_piano)*2])(pillars2_3_y)
 
-#allineamento dei 4 pilastri dove non e' presente il pavimento
-pillar2_rett = CUBOID([l,l,h_piano])
-pillars2_2_all = STRUCT(NN(2)([pillar2_rett, T([1])([2.75])]))
-pillars2_2_all_trasl = T([3])(2.5+h_piano+2.5)(pillars2_2_all)
-pillars2_2_y = T([2,3])([5.32,2.5+h_piano+2.5])(pillars2_2_all)
 # totale dei pilastri del secondo piano
-pillars2 = STRUCT([pillars2_2_trasl, pillar2_1, pillars2_3_y_trasl,pillars2_2_all_trasl, pillars2_2_y])
+pillars2 = STRUCT([pillars2_2_trasl, pillar2_1, pillars2_3_y_trasl]) 
 
 #### terzo piano ####
 #pilastri laterali destra
@@ -92,10 +87,17 @@ pillars3_3_y = T([1,3])([5.5,(2.5+h_piano)*2])(pillars1_3_y)
 pillars3_2_small = STRUCT(NN(2)([pillar_rett_small, T([1])([2.75])]))
 pillars3_2_small_trasl = T([2,3])([5.3825,(2.5+h_piano)*3])(pillars3_2_small)
 #pilastro isolato 
-pillars3_1 = T([1,2,3])([11,5.32+l+1.18575,(2.5+h_piano)*3])(pillar_rett)
+pillars3_1 = T([1,2,3])([11,5.32+1.18575,(2.5+h_piano)*3])(pillar_rett)
+#allineamento del pilastro dove non e' presente il pavimento
+pillar2_rett = CUBOID([l,l,h_piano])
+pillars2_2_all = STRUCT(NN(2)([pillar2_rett, T([1])([2.75])]))
+pillars_no_pavimento = T([1,2,3])([2.75,5.32,(2.5+h_piano)*2+2.5])(pillar2_rett)
+#pilastro fuori angolo
+pillar3_ang = T([3])([(2.5+h_piano)*3])(pillar0)
 #totale pilastri terzo piano
-pillars3 = STRUCT([pillars3_2_xtrasl,pillars3_3_y, pillars3_2_small_trasl, pillars3_1])
+pillars3 = STRUCT([pillars3_2_xtrasl,pillars3_3_y, pillars3_2_small_trasl, pillars3_1, pillars_no_pavimento,pillar3_ang])
 
+#insieme di pilastri 
 buildings = STRUCT([pillars0,pillars1,pillars2, pillars3])
 VIEW(buildings)
 
