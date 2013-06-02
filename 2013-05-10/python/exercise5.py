@@ -15,7 +15,7 @@ def GRID(args):
 	verts = AA(list)(scipy.array(V)/AA(float)(args))
 	return MKPOL([verts,AA(AA(lambda h:h+1))(cells),None])
 
-x = 20
+x = 25
 dominio = INTERVALS(1)(x)
 dom2D = GRID([x,x])
 
@@ -49,6 +49,9 @@ def punti_controllo_cerchioBEZIER(r):
 				c[i][k] = c[i][k]*r
 	return c
 
+#colori
+
+rosso_ferrari = [204, 0, 0]
 
 #PROFILO SINISTRO immagine: Slide.jpg
 cofano_sup = BEZIER(S1)([[4.38,0, 3.03],[3.64,0, 3.2],[0.66,0, 2.36],[0,0, 1.72]])
@@ -613,25 +616,105 @@ unione_cs = TEXTURE('../images/nero_opaco.jpg')(MAP(BEZIER(S2)([cs1,cs2]))(dom2D
 cs1b = BEZIER(S1)([[0,1.83, 0.86], [0,1.8, 0.75], [0,6.88, 0.75], [0,6.7, 0.86]])
 dg_r1 = BEZIER(S1)([[0.4,0.69, 0.72], [0,1.6, 0.67], [0,5.52, 0.79], [0.4,7.67, 0.72]])
 
-unione_dg_r = COLOR(RED)(STRUCT([MAP(BEZIER(S2)([cs1b,cs1]))(dom2D),MAP(BEZIER(S2)([cs1b,dg_r1]))(dom2D)]))
+unione_dg_r = COLOR(rgb(rosso_ferrari))(STRUCT([MAP(BEZIER(S2)([cs1b,cs1]))(dom2D),MAP(BEZIER(S2)([cs1b,dg_r1]))(dom2D)]))
 
 superficie = STRUCT([unione_davanti, unione_parte_sup,unione_parte_sup_s,unione_dg,unione_cs,unione_dg_r])
 
 ####PORTIERA
+#lati
+pm1 = BEZIER(S1)([[10.21,0, 1.08], [10.87,0, 2.48], [10.72,0, 2.89], [10.32,0, 3.26]])
+pm2 = BEZIER(S1)([[10.21,0.2, 1.08], [10.87,0.2, 2.48], [10.72,0.2, 2.89], [10.32,0.2, 3.26]])
 
-pm1 = BEZIER(S1)([[10.16,0.2, 0.97],[10.41,0, 1.48],[11.07,0, 2.63],[10.29,0.1, 3.25]])
-pm2 = BEZIER(S1)([[10.16,0.2+0.2, 0.97],[10.41,0+0.2, 1.48],[11.07,0+0.2, 2.63],[10.29,0.1+0.2, 3.25]])
-pm3 = BEZIER(S1)([[6,0, 2.92], [5.62,0, 2.7],  [5.93,0, 0.73]])
-pm4 = BEZIER(S1)([[6,0+0.2, 2.92], [5.62,0+0.2, 2.7],  [5.93,0+0.2, 0.73]])
+pm3 = BEZIER(S1)([[5.97,0, 2.9], [5.62,0, 2.7],  [5.93,0, 0.73]])
+pm4 = BEZIER(S1)([[5.97,0.2, 2.9], [5.62,0+0.2, 2.7],  [5.93,0+0.2, 0.73]])
 
-pm_union = COLOR(RED)(MAP(BEZIER(S2)([pm3,pm1]))(dom2D))
-# pm_union2 = COLOR(RED)(MAP(BEZIER(S2)([pm1,pm3]))(dom2D))
+#parte sopra portiera
+psp1 = BEZIER(S1)([[5.97,0, 2.9], [7.77,0, 2.85], [9.87,0, 3.11], [10.32,0, 3.26]])
+#parte sotto
+pss1 = BEZIER(S1)([[5.92,0, 0.72], [10.09,0, 0.9], [9.9,0, 0.59], [10.21,0, 1.08]])
+#rientranza prima
+rsp1 = BEZIER(S1)([[5.8,0, 2.4], [7.78,0, 2.88], [10.69,0, 2.44]])
+#sporgenza portiera
+sp = BEZIER(S1)([[5.8,0, 2.39], [7.47,-0.6, 2.69], [9.76,-0.6, 2.42], [10.65,0, 2.34]])
+#rientranza 
+rsp2 = BEZIER(S1)([[5.78,0, 2.3], [7.78,0, 2.68], [10.63,0, 2.24]])
+#definizione laterale
+spdl1 = BEZIER(S1)([[5.86,0, 2.8], [7.92,0, 2.7],[10.9,0, 2.8]])
+spdl4 = BEZIER(S1)([[5.75,0, 2.04],[8.87,0, 1.92],[10.65,0, 2.07]])
+spdl5 = BEZIER(S1)([[5.8,0, 1.75],[8.79,0, 1.56], [10.58,0, 1.87]])
+spdl6 = BEZIER(S1)([[5.85,0, 1.16], [7.57,0, 1.05],[10.33,0, 1.25]])
 
-draw = STRUCT([profilo_alto,profilo_frontale,profilo_sinistro,ruote_laterali_sinistra,ruote_laterali_destra,volante,superficie,pm_union])
+pspp_unione = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([psp1,spdl1,rsp2,sp,rsp1,spdl4,spdl5,spdl6,pss1]))(dom2D))
 
+# unione_colori = STRUCT([psp1_map,spdl1_map,rsp2_map,sp_map,rsp1_map,spdl4_map,spdl5_map,spdl6_map,pss1_map,pm1_map,pm3_map])
+# #interno macchina
+psp1_i = BEZIER(S1)([[5.97,0.2, 2.9], [7.77,0.2, 2.85], [9.87,0.2, 3.11], [10.32,0.2, 3.26]])
+#parte sotto
+pss1_i = BEZIER(S1)([[5.92,0.2, 0.74], [10.09,0.2, 0.9], [9.9,0.2, 0.59], [10.21,0.2, 1.08]])
+#definizione laterale
+spdl1_i = BEZIER(S1)([[5.86,0.2, 2.8], [7.92,0.2, 2.7],[10.9,0.2, 2.8]])
+spdl4_i = BEZIER(S1)([[5.75,0.2, 2.04],[8.87,0.2, 1.92],[10.65,0.2, 2.07]])
+spdl5_i = BEZIER(S1)([[5.8,0.2, 1.75],[8.79,0.2, 1.56], [10.58,0.2, 1.87]])
+spdl6_i = BEZIER(S1)([[5.85,0.2, 1.16], [7.57,0.2, 1.05],[10.33,0.2, 1.25]])
+
+pspp2_unione = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([psp1_i,spdl1_i,spdl4_i,spdl5_i,spdl6_i,pss1_i]))(dom2D))
+
+#chiusure laterali
+pm_union = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([pm1,pm2]))(dom2D))
+pm_union2 = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([pm3,pm4]))(dom2D))
+#chiusure sopra e sotto
+pm_union3 = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([psp1_i,psp1]))(dom2D))
+pm_union4 = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([pss1_i,pss1]))(dom2D))
+
+#maniglia portiera
+mp1 = BEZIER(S1)([[10.01,-0.01, 2.63], [10.01,-0.01, 2.67], [10.48,0, 2.96], [10.48,-0.01, 2.66]])
+mp2 = BEZIER(S1)([[10.01,-0.01, 2.63], [10.02,-0.01, 2.59],[10.53,0, 2.37], [10.48,-0.01, 2.66]])
+#sporgenza
+mp3 = BEZIER(S1)([[10.01,-0.01, 2.63], [10.22,-0.2, 2.66],[10.45,-0.01, 2.66]])
+
+mp_unione = COLOR(rgb([128, 0, 0]))(MAP(BEZIER(S2)([mp1,mp3,mp2]))(dom2D))
+
+#unione superfici portiera
+superfici_portiera = STRUCT([mp_unione, pspp_unione,pspp2_unione,pm_union,pm_union2,pm_union3,pm_union4])
+
+#specchietto destro
+sp_des1 = BEZIER(S1)([[6.73,-0.1, 2.86], [6.96,-0.1, 2.71], [7.3,-0.1, 2.85], [7.26,-0.1, 3.03]])
+sp_des2 = BEZIER(S1)([[6.55,-0.1, 3.1], [6.55,-0.1, 3.18], [7.3,-0.1, 3.5], [7.26,-0.1, 3.03]])
+
+sp_des3 = BEZIER(S1)([[6.61,-0.1, 2.97], [6.72,-0.4, 3.11], [7.26,-0.1, 3.03]])
+#manico
+sp_des4 = BEZIER(S1)([[6.7,-0.24, 2.88], [6.97,-0.24, 3.55], [5.82,-0.15, 2.62], [6.35,0, 2.6]])
+sp_des5 = BEZIER(S1)([[6.7,-0.24, 2.88], [6.52,-0.24, 2.77], [6.64,-0.15, 2.54], [6.35,0, 2.6]])
+
+spdes1_unione = T([2])([-0.1])(COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([sp_des2,sp_des3,sp_des1]))(dom2D)))
+spdes2_unione = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([sp_des4,sp_des5]))(dom2D))
+
+#spessore
+sp_des1_s = BEZIER(S1)([[6.73,-0.05, 2.86], [6.96,-0.05, 2.71], [7.3,-0.05, 2.85], [7.26,-0.05, 3.03]])
+sp_des2_s = BEZIER(S1)([[6.55,-0.05, 3.1], [6.55,-0.05, 3.18], [7.3,-0.05, 3.5], [7.26,-0.05, 3.03]])
+
+#m21anico
+sp_des4_s = BEZIER(S1)([[6.7,-0.19, 2.88], [6.97,-0.19, 3.55], [5.82,-0.1, 2.62], [6.35,0.05, 2.6]])
+sp_des5_s = BEZIER(S1)([[6.7,-0.19, 2.88], [6.52,-0.19, 2.77], [6.64,-0.1, 2.54], [6.35,0.05, 2.6]])
+sp_des3_unione = T([2])([-0.1])(COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([sp_des2_s,sp_des1_s]))(dom2D)))
+sp_des4_unione = T([2])([-0.1])(COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([sp_des1,sp_des1_s]))(dom2D)))
+sp_des5_unione = T([2])([-0.1])(COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([sp_des2,sp_des2_s]))(dom2D)))
+
+sp_des6_unione = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([sp_des4_s,sp_des5_s]))(dom2D))
+sp_des7_unione = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([sp_des4,sp_des4_s]))(dom2D))
+sp_des8_unione = COLOR(rgb(rosso_ferrari))(MAP(BEZIER(S2)([sp_des5,sp_des5_s]))(dom2D))
+
+#parte alta finestrino
+finestr_chiusura = MKPOL([[[10.3, 3.255],[10.4, 4.02],[10.36, 4.03],[10.2, 3.235]],[[1,2,3,4]],None])
+fin_3D = COLOR(BLACK)(R([2,3])(PI/2)(extrude(finestr_chiusura,-0.2)))
+
+
+draw1 = STRUCT([superfici_portiera,fin_3D,spdes1_unione,spdes2_unione,sp_des3_unione,sp_des4_unione,sp_des5_unione,sp_des6_unione,sp_des7_unione,sp_des8_unione])
+
+draw = STRUCT([draw1,profilo_alto,profilo_frontale,profilo_sinistro,ruote_laterali_sinistra,ruote_laterali_destra,volante,superficie])
 # # # #se si vuole riportare al centro
-draw_t = T([1,2])([-9.18, -4.27,0])(draw)
+# draw_t = T([1,2])([-9.18, -4.27,0])(draw)
 
 VIEW(draw)
 
-VIEW(draw_t)
+# VIEW(draw_t)
