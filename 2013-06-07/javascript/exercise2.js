@@ -37,7 +37,6 @@ var terreno = COLOR(rgb(marrone))(STRUCT([MAP(piano)(dominio),cuboid_base]))
 DRAW(terreno)
 
 //EXERCISE 2
-var blu = [0,49,83]
 var cobalto = [0,123,167]
 
 var lago1 = COLOR(rgb(cobalto))(extrude(SIMPLICIAL_COMPLEX([[5,-12],[4,-40],[35,-40]])([[0,1,2]]),3))

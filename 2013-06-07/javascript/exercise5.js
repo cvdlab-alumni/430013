@@ -121,7 +121,7 @@ DRAW(genera_alberi_random(-10,20,50))
 DRAW(genera_alberi_random(-10,15,50))
 
 //affianco cittadina
-DRAW(T([0,1])([-10,-35])(genera_alberi_random(1,1,6)))
+DRAW(T([0,1])([-11,-35])(genera_alberi_random(1,1,6)))
 DRAW(T([0,1])([-25,-35])(genera_alberi_random(1,1,10)))
 DRAW(T([0,1])([-35,-35])(genera_alberi_random(1,1,6)))
 
@@ -254,10 +254,12 @@ var insediamento2 = T([0,1,2])([-9,25,0.75])(posiz_case_e_strade(3,5,5,7))
 var cuboid3 = COLOR(rgb(marrone))(T([0,1])([-31,30])(CUBOID([8,10,0.7])))
 var insediamento3 = T([0,1,2])([-30,32,0.75])(posiz_case_e_strade(3,5,5,7))
 
-var strada_principale1 = T([0,1,2])([-40,-1,0.55])(CUBOID([80,1,0.01]))
+var strada_principale1 = T([0,1,2])([-40,-1,0.55])(CUBOID([80,1,0.5]))
 var strada_principale2 = T([0,1,2])([-3,-40,0.55])(CUBOID([1,80,0.5]))
 
-var insediamenti_umani = STRUCT([cuboid1,insediamento1,cuboid2,insediamento2,cuboid3,insediamento3,strada_principale1,strada_principale2])
+var strada3 = T([0,1,2])([-30,30,0.55])(CUBOID([30,1,0.5]))
+
+var insediamenti_umani = STRUCT([cuboid1,insediamento1,cuboid2,insediamento2,cuboid3,insediamento3,strada_principale1,strada_principale2,strada3])
 
 DRAW(insediamenti_umani)
 
