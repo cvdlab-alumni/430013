@@ -1122,4 +1122,4 @@ var tubi_motore = T([0,1,2])([2.85,0.51,0.97])(S([0,1,2])([0.09,0.09,0.09])(tubi
 
 ///FINE MOTO ----- ASSEMBLAGGIO PEZZI
 var model = STRUCT([manubrio_trasl,unione_marmitta_completa,forcelle,ruota_posteriore,ruota_anteriore,unione_curve_parafango,unione_curve_sellino,serbatoio,doppie_frecce_dietro,doppie_frecce_davanti,tubo_compl,fanalino_avanti,unione_tubo_serbatoio_sinistro,unione_tubo_serbatoio_destro,tubo_adiac,cuboid_nero_ant,unione_curv_chius,tachimetro,cuboid_nero_motore,cub_sottostante,unione_chiusura_post,unione_pezzo_sinistro_ruota,disco_unione,tubi_motore,motore_cilindri,strutt_cerchi,unione_bm_s, unione_bm,spessore_completo_sinistra,spessore_completo_destro, unione_curve_parafango_ant,tubo_1fs,tubo_2fs])
-
+DRAW(model)
